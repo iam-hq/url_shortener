@@ -1,0 +1,10 @@
+/node_modules
+/build
+.env
+.env.backup
+.env.production
+auth.json
+npm-debug.log
+/.fleet
+/.idea
+/.vscode
