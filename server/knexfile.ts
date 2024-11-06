@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import type { Knex } from "knex";
 
-const { DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME } = process.env;
+const { DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME, DB_SSL } = process.env;
 
 
 const config: { [key: string]: Knex.Config } = {
@@ -13,6 +13,7 @@ const config: { [key: string]: Knex.Config } = {
       user: DB_USER,
       password: DB_PASS,
       database: DB_NAME,
+      ssl: DB_SSL,
     },
     pool: {
       min: 2,
@@ -31,6 +32,7 @@ const config: { [key: string]: Knex.Config } = {
       user: DB_USER,
       password: DB_PASS,
       database: DB_NAME,
+      ssl: DB_SSL,
     },
     pool: {
       min: 2,
@@ -49,6 +51,7 @@ const config: { [key: string]: Knex.Config } = {
       user: DB_USER,
       password: DB_PASS,
       database: DB_NAME,
+      ssl: DB_SSL,
     },
     pool: {
       min: 2,

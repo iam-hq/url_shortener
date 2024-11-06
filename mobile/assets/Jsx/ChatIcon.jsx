@@ -1,0 +1,16 @@
+import * as React from 'react';
+import Svg, {Path} from 'react-native-svg';
+
+export default props => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={props.size}
+    height={props.size}
+    style={{
+      fill: props.color,
+    }}
+    {...props}>
+    <Path d="M4 18h2v4.081L11.101 18H16c1.103 0 2-.897 2-2V8c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2z" />
+    <Path d="M20 2H8c-1.103 0-2 .897-2 2h12c1.103 0 2 .897 2 2v8c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z" />
+  </Svg>
+);
