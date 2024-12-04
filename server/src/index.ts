@@ -7,6 +7,8 @@ import knex, { onDatabaseConnect } from "./config/knex";
 import { createShortURL } from "./services/urls";
 import router from "./routes";
 
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
+
 const app = new Koa();
 
 app.use(cors());

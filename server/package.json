@@ -5,10 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon .\\src\\index.ts",
+    "dev": "nodemon src/index.ts",
     "start": "ts-node -r tsconfig-paths/register src/index.ts",
-    "build": "tsc"
+    "build": "rimraf dist && tsc",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add build"
   },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -30,6 +37,8 @@
     "eslint-plugin-promise": "^6.6.0",
     "globals": "^15.10.0",
     "nodemon": "^3.1.7",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.8.0"

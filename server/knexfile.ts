@@ -1,6 +1,8 @@
 import 'dotenv/config'
 import type { Knex } from "knex";
 
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
+
 const { DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME, DB_SSL } = process.env;
 
 
