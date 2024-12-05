@@ -2,7 +2,7 @@ export default function Container({
                                       children,
                                       size = 'max-w-7xl',
                                       padding = 'p-6',
-                                      yPadding = "py-12",
+                                      yPadding = "py-4 md:py-12",
                                       xPadding = 'sm:px-6 lg:px-8',
     transparent = false,
                                   }) {

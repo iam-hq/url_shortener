@@ -11,9 +11,9 @@ export default function AuthLayout() {
     }, []);
     return (<div className={'bg-gray-100 min-h-screen relative grid grid-cols-1 items-center'}>
         <Container padding={'p-0'}>
-            <div className="grid grid-cols-2 gap-4">
-                <div className="w-full h-[60vh] rounded-r-lg">
-                    <img src="/img/img1.jpg" className={'w-full h-[60vh] rounded-r-lg object-cover'} alt=""/>
+            <div className="md:grid grid-cols-2 gap-4">
+                <div className="w-full h-[15vh] md:h-[60vh]">
+                    <img src="/img/img1.jpg" className={'w-full h-[15vh] md:h-[60vh] rounded-t rounded-b-xl md:rounded-r-lg object-cover'} alt=""/>
                 </div>
                 <Outlet />
             </div>

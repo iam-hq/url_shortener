@@ -49,11 +49,11 @@ export default function Home() {
 
     useEffect(() => {
         fetchLinks();
-    }, []);
+    }, [token]);
     return (
         <>
             <Container padding={''} transparent>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <Container yPadding={''} xPadding={''}>
                         <div className={'flex items-center'}>
                             <div className={'flex-1'}>
