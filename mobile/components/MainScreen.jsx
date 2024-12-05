@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Home from '../pages/Home';
+import Index from '../pages/Home';
 import {mainColors, colors} from '../assets/colors';
 import HomeLogo from '../assets/Jsx/HomeLogo';
 import ProductsIcon from '../assets/Jsx/ProductsIcon';
