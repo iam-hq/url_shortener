@@ -1,15 +1,15 @@
-import {useQuery} from "@tanstack/react-query";
-import axios from "axios";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {createUrl, fetchUrls, updateUrl} from "../services/urlService";
 
 export const useLinks = (token) => {
-    const fetchLinks = axios.get(`${process.env.REACT_APP_BACKEND_URL}/urls`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        }
-    })
+    return useQuery({queryKey: ['links'], queryFn: () => fetchUrls(token)})
+}
 
-    return useQuery({
-        queryKey: ['links'],
-        queryFn: fetchLinks,
+export const useCreateLink = (token) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (data) => createUrl(token, data),
+        onSuccess: () => queryClient.invalidateQueries({queryKey: ['links']}),
     })
 }

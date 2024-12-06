@@ -5,51 +5,36 @@ import {useEffect, useState} from "react";
 import {NavLink} from "react-router";
 import {useStore} from "../../store";
 import useForm from "../../hooks/useForm";
-import {useLinks} from "../../hooks/useLinks";
-import {useCreateLink} from "../../hooks/useCreateLink";
-import axios from "axios";
+import {useLinks, useCreateLink} from "../../hooks/useLinks";
 import {toast} from "react-toastify";
 
 
 export default function Home() {
     const token = useStore(state => state.token);
     const [showOptions, setShowOptions] = useState(false);
-    const [latestLinks, setLatestLinks] = useState([]);
-
-    const fetchLinks = async () => {
-        try {
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/urls`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            })
-            console.log(response.data)
-            setLatestLinks(response.data)
-        } catch (err) {
-            console.log(err)
-            toast.error(err.response.data)
-        }
-    }
+    const [formData, onChange] = useForm({url: '', id: ""})
+    const {data: latestLinks, error} = useLinks(token)
 
     const createLink = useCreateLink(token);
-
-    const [data, onChange] = useForm({url: '', id: ""})
 
     const onSubmit = (e) => {
         e.preventDefault();
         const body = {
-            url: data.url,
+            url: formData.url,
         }
 
-        if(data.id) {
-            body.id = data.id;
+        if(formData.id) {
+            body.id = formData.id;
         }
         createLink.mutate(body);
     }
 
     useEffect(() => {
-        fetchLinks();
-    }, [token]);
+        if(createLink.isSuccess) {
+            toast.success('URL created successfully!')
+        }
+    }, [createLink.isSuccess, createLink.isError])
+
     return (
         <>
             <Container padding={''} transparent>
@@ -104,7 +89,7 @@ export default function Home() {
                             <FaGlobe className="w-4 h-4 text-gray-500 "/>
                         </div>
                         <input type="url" name={'url'}
-                               value={data.url}
+                               value={formData.url}
                                onChange={onChange}
                                className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500"
                                placeholder="https://website.com"/>
@@ -122,7 +107,7 @@ export default function Home() {
                             </button>
                         </div>
                         <input className={`border border-gray-300 rounded-lg py-2 px-4 ${showOptions ? '' : 'hidden'}`}
-                               placeholder={'Custom Link Name...'} name={'id'} value={data.id} onChange={onChange}/>
+                               placeholder={'Custom Link Name...'} name={'id'} value={formData.id} onChange={onChange}/>
                     </div>
                 </div>
             </Container>
