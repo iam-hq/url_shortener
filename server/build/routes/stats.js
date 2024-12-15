@@ -13,19 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const router_1 = __importDefault(require("@koa/router"));
-const auth_1 = __importDefault(require("./auth"));
-const urls_1 = __importDefault(require("./urls"));
-const middlewares_1 = require("./middlewares");
-const visits_1 = __importDefault(require("./visits"));
-const urls_2 = require("../services/urls");
-const stats_1 = __importDefault(require("./stats"));
-const router = new router_1.default();
-router.use("/auth", auth_1.default.routes(), auth_1.default.allowedMethods());
-router.use("/urls", middlewares_1.requireAuthHandler, urls_1.default.routes(), urls_1.default.allowedMethods());
-router.use("/visits", middlewares_1.requireAuthHandler, visits_1.default.routes(), visits_1.default.allowedMethods());
-router.use("/stats", stats_1.default.routes(), stats_1.default.allowedMethods());
-router.get("/:id", (ctx) => __awaiter(void 0, void 0, void 0, function* () {
-    const url = yield (0, urls_2.resolveURL)(ctx.params.id, ctx.request.ip);
-    ctx.redirect(url);
+const stats_1 = require("../services/stats");
+const statRouter = new router_1.default();
+statRouter.get("/", (ctx) => __awaiter(void 0, void 0, void 0, function* () {
+    ctx.response.body = yield (0, stats_1.getStats)(ctx.state.user_id);
 }));
-exports.default = router;
+exports.default = statRouter;
