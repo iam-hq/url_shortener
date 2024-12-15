@@ -4,6 +4,7 @@ import urlRouter from "./urls";
 import { requireAuthHandler } from "./middlewares";
 import visitsRouter from "./visits";
 import { resolveURL } from "../services/urls";
+import statRouter from "./stats";
 
 const router = new Router();
 
@@ -21,6 +22,12 @@ router.use(
   requireAuthHandler,
   visitsRouter.routes(),
   visitsRouter.allowedMethods()
+);
+
+router.use(
+    "/stats",
+    statRouter.routes(),
+    statRouter.allowedMethods()
 );
 
 router.get("/:id", async (ctx) => {

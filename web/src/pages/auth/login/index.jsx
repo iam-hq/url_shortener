@@ -1,12 +1,15 @@
 import {Link, useNavigate} from "react-router";
 import {useStore} from "../../../store";
 import axios from "axios";
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import useForm from "../../../hooks/useForm";
+import {FaSpinner} from "react-icons/fa6";
+import {useState} from "react";
 
 export default function Login() {
     const navigate = useNavigate();
     const {setLogin} = useStore()
+    const [processing, setProcessing] = useState(false);
 
     const [data, onChange] = useForm({
         username: "",
@@ -16,18 +19,21 @@ export default function Login() {
     const handleSubmit = async (evt) => {
         evt.preventDefault();
 
-        if(data.username && data.password) {
+        setProcessing(true);
+        if (data.username && data.password) {
             try {
                 const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, data);
                 toast.success("Login Successful!.")
                 setLogin(response.data)
                 navigate("/");
-            }catch(err) {
+            } catch (err) {
                 console.log(err)
                 toast.error(err.response.data)
+                setProcessing(false);
             }
         } else {
             toast.error("Please enter a valid username and password")
+            setProcessing(false);
         }
     }
 
@@ -40,7 +46,7 @@ export default function Login() {
                 <input type="text" name="username"
                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5"
                        placeholder="Username..." value={data.username}
-                       onChange={onChange} />
+                       onChange={onChange}/>
             </div>
             <div>
                 <label htmlFor="password"
@@ -49,14 +55,14 @@ export default function Login() {
                        value={data.password}
                        onChange={onChange}
                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5"
-                       />
+                />
             </div>
             <div className="flex items-center justify-between">
                 <div className="flex items-start">
                     <div className="flex items-center h-5">
                         <input id="remember" aria-describedby="remember" type="checkbox"
                                className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-indigo-300"
-                               />
+                        />
                     </div>
                     <div className="ml-3 text-sm">
                         <label htmlFor="remember" className="text-gray-500 ">Remember me</label>
@@ -67,8 +73,9 @@ export default function Login() {
                 </Link>
             </div>
             <button type="submit" onClick={handleSubmit}
-                    className="w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-full text-sm px-5 py-2.5 text-center">Sign
-                in
+                    disabled={processing}
+                    className="w-full text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-950 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-full text-sm px-5 py-2.5 text-center">
+                {!processing ? 'Sign in' : <div className="flex justify-center"><FaSpinner className={'animate-spin text-xl self-center'}/></div>}
             </button>
             <p className="text-sm font-light text-gray-500 ">
                 Don’t have an account yet?
