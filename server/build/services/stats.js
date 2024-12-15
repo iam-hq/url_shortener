@@ -18,8 +18,8 @@ const getStats = (user_id) => __awaiter(void 0, void 0, void 0, function* () {
     const results = yield (0, knex_1.default)("urls")
         .where({ user_id })
         .leftJoin("visits", "urls.id", "visits.url_id")
-        .select("urls.user_id", knex_1.default.raw("count(visits.id) as visits_count"), knex_1.default.raw("count(urls.id) as url_count"), knex_1.default.raw("count(distinct visits.ip) as visitor_count"))
-        .groupBy("urls.user_id");
+        .select("user_id", knex_1.default.raw("count(visits.id) as visits_count"), knex_1.default.raw("count(urls.id) as url_count"), knex_1.default.raw("count(distinct visits.ip) as visitor_count"))
+        .groupBy("user_id");
     return results;
 });
 exports.getStats = getStats;

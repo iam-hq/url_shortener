@@ -7,12 +7,12 @@ export const getStats = async (
         .where({user_id})
         .leftJoin("visits", "urls.id", "visits.url_id")
         .select(
-            "urls.user_id",
+            "user_id",
             knex.raw("count(visits.id) as visits_count"),
             knex.raw("count(urls.id) as url_count"),
             knex.raw("count(distinct visits.ip) as visitor_count"),
         )
-        .groupBy("urls.user_id");
+        .groupBy("user_id");
 
     return results;
 };
